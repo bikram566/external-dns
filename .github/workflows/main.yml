@@ -1,0 +1,41 @@
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    
+#     - name: Azure Login
+#       uses: azure/login@v1
+#       with:
+#         creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+   
+    
+#     - name: Gets K8s context
+#       uses: azure/aks-set-context@v1
+#       with:
+#           creds: ${{ secrets.AZURE_CREDENTIALS }}
+#           resource-group: k8
+#           cluster-name: k8
+#       id: login
+      
+#     - uses: azure/setup-kubectl@v2.0
+#       with:
+#         version: v1.23.0
+#       id: install
+      
+    - uses: microsoft/variable-substitution@v1 
+      with:
+          files: 'azure.json'
+      env:
+          tenantId: ${{ secrets.tenantID }}
+          subscriptionId: ${{ secrets.subscriptionID }}
+          resourceGroup: ${{ secrets.resourceGroupID }}
+    - name: print json
+      run: |
+          ls -la
+          cat azure.json
+
+    
